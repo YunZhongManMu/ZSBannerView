@@ -5,6 +5,7 @@
 //  Created by Shaun on 2018/7/20.
 //  Copyright © 2018年 Shaun. All rights reserved.
 //
+//  https://www.jianshu.com/p/50837fa99466
 
 #import "ViewController.h"
 #import "ZSBannerView.h"
