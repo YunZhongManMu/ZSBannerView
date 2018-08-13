@@ -9,9 +9,11 @@
 #import "ZSBannerView.h"
 #import "ZSBannerCell.h"
 
-CGFloat const HorizontalMargin2 = 15.0;
-CGFloat const ItemMargin2 = 7.0;
-NSInteger const count = 3;
+//CGFloat const HorizontalMargin2 = 50.0;
+//CGFloat const ItemMargin2 = 15.0;
+
+CGFloat const HorizontalMargin2 = 0;
+CGFloat const ItemMargin2 = 0;
 
 @interface ZSBannerConfig ()
 
@@ -62,9 +64,10 @@ NSInteger const count = 3;
     [self addSubview:self.collectionView];
     [self.collectionView registerClass:ZSBannerCell.class forCellWithReuseIdentifier:ZSBannerCell.zs_identifier];
     CGFloat pageScrollWidth = (self.bounds.size.width - HorizontalMargin2 * 2) + ItemMargin2;
-
+    
     CGRect frame = CGRectMake((self.bounds.size.width - pageScrollWidth) / 2.0, 0, pageScrollWidth, self.bounds.size.height);
     UIScrollView *panScrollView = [[UIScrollView alloc] initWithFrame:frame];
+    panScrollView.backgroundColor = [UIColor redColor];
     panScrollView.hidden = YES;
     panScrollView.showsHorizontalScrollIndicator = NO;
     panScrollView.pagingEnabled = YES;
@@ -79,6 +82,7 @@ NSInteger const count = 3;
 - (void)createConfig {
     // 用于初始化默认的配置
     ZSBannerConfig *bannerConfig = [[ZSBannerConfig alloc] init];
+    bannerConfig.placeholder = nil;
     bannerConfig.autoScrollInterval = 3;
     self.bannerConfig = bannerConfig;
 }
@@ -96,7 +100,7 @@ NSInteger const count = 3;
         }
     }
     
-    self.totalItemsCount = self.dataArray.count * count;
+    self.totalItemsCount = self.dataArray.count * 100;
     if (self.dataArray.count > 1) {
         self.collectionView.scrollEnabled = YES;
         [self startTimer];
@@ -137,7 +141,7 @@ NSInteger const count = 3;
 
 // 找到当前的滚动的index
 - (NSInteger)currentIndex {
-    NSInteger index = (self.collectionView.contentOffset.x + self.collectionView.frame.size.width * 0.5) / self.collectionView.frame.size.width;
+    NSInteger index = (self.panScrollView.contentOffset.x + self.panScrollView.frame.size.width * 0.5) / self.panScrollView.frame.size.width;
     return MAX(0, index);
 }
 
@@ -147,33 +151,16 @@ NSInteger const count = 3;
 }
 
 - (void)scrollToIndex:(NSInteger)index {
-#warning 大于总条数时处理， 小于总条数时应该也处理
-//    if (index >= _totalItemsCount) {
-//        index = _totalItemsCount * 0.5;
-//        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-//        return;
-//    }
-//    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
-    
-    if (index >= _totalItemsCount) {
-        index = _totalItemsCount * 0.5;
+    if (index + 1 >= _totalItemsCount) {
+        index = _totalItemsCount * 0.5 - 1;
         [_panScrollView setContentOffset:CGPointMake(_panScrollView.contentOffset.x - _panScrollView.frame.size.width * index, 0) animated:NO];
-        return;
+    } else {
+        [_panScrollView setContentOffset:CGPointMake(_panScrollView.contentOffset.x + _panScrollView.frame.size.width, 0) animated:YES];
     }
-    [_panScrollView setContentOffset:CGPointMake(_panScrollView.contentOffset.x + _panScrollView.frame.size.width, 0) animated:YES];
 }
 
 // 起始始默认滚动
 - (void)defaultScrollItem {
-//    if (self.collectionView.contentOffset.x == 0 && _totalItemsCount > 0) {
-//        NSInteger index = _totalItemsCount * 0.5;
-//        // 防止启动时，与系统动画冲突报错
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-//        });
-//    }
-    
-    
     if (self.collectionView.contentOffset.x == 0 && _totalItemsCount > 0) {
         NSInteger index = _totalItemsCount * 0.5;
         // 防止启动时，与系统动画冲突报错
@@ -226,17 +213,13 @@ NSInteger const count = 3;
     }
 }
 
-// 每个item的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat itemWidth = (self.bounds.size.width - HorizontalMargin2 * 2);
     return CGSizeMake(itemWidth, self.bounds.size.height);
-//    return CGSizeMake(self.bounds.size.width, self.bounds.size.height);
 }
 
-// 行间距（竖直滚动）   列间距（水平滚动）
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return ItemMargin2;
-//    return 0;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -261,8 +244,7 @@ NSInteger const count = 3;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor whiteColor];
-//        _collectionView.pagingEnabled = YES;
-        _collectionView.clipsToBounds = NO;
+//        _collectionView.clipsToBounds = YES;
     }
     return _collectionView;
 }

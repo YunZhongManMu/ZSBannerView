@@ -9,7 +9,6 @@
 
 #import "ViewController.h"
 #import "ZSBannerView.h"
-#import "HVWBorderShownCardsView.h"
 
 @interface ViewController ()<ZSBannerViewDelegate, ZSBannerViewDataSource>
 
@@ -29,21 +28,12 @@
     ZSBannerView *bannerView = [[ZSBannerView alloc] initWithFrame:CGRectMake(padding, 50, width, height)];
     bannerView.delegate = self;
     bannerView.dataSource = self;
-    bannerView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view addSubview:bannerView];
 
+    // 模拟网络请求
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [bannerView reloadData];
     });
-    
-    
-    
-    CGFloat width2 = [UIScreen mainScreen].bounds.size.width;
-    HVWBorderShownCardsView *view = [[HVWBorderShownCardsView alloc] initWithFrame:CGRectMake(0, 400, width2, (640.0/1024.0)*width2)];
-    [self.view addSubview:view];
-    
-    view.images = @[[UIImage imageNamed:@"image1"], [UIImage imageNamed:@"image2"], [UIImage imageNamed:@"image3"], [UIImage imageNamed:@"image4"]];
-
 }
 
 #pragma mark - <ZSBannerViewDelegate, ZSBannerViewDataSource>

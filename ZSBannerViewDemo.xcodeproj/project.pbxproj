@@ -15,8 +15,6 @@
 		288BC9372101B8F500E47ADA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC9362101B8F500E47ADA /* main.m */; };
 		288BC9402101BAA400E47ADA /* ZSBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC93F2101BAA400E47ADA /* ZSBannerView.m */; };
 		288BC9432101BC0C00E47ADA /* ZSBannerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC9422101BC0C00E47ADA /* ZSBannerCell.m */; };
-		288BC9462105855000E47ADA /* HVWBorderShownCardsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC9452105855000E47ADA /* HVWBorderShownCardsView.m */; };
-		288BC9492105857100E47ADA /* HVWBorderShownCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC9482105857100E47ADA /* HVWBorderShownCardCell.m */; };
 		C134140EE956E6F6AC5E80C4 /* libPods-ZSBannerViewDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57D8C4F896A90D7B9D38AEBE /* libPods-ZSBannerViewDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -35,10 +33,6 @@
 		288BC93F2101BAA400E47ADA /* ZSBannerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSBannerView.m; sourceTree = "<group>"; };
 		288BC9412101BC0C00E47ADA /* ZSBannerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSBannerCell.h; sourceTree = "<group>"; };
 		288BC9422101BC0C00E47ADA /* ZSBannerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSBannerCell.m; sourceTree = "<group>"; };
-		288BC9442105855000E47ADA /* HVWBorderShownCardsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVWBorderShownCardsView.h; sourceTree = "<group>"; };
-		288BC9452105855000E47ADA /* HVWBorderShownCardsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVWBorderShownCardsView.m; sourceTree = "<group>"; };
-		288BC9472105857100E47ADA /* HVWBorderShownCardCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HVWBorderShownCardCell.h; sourceTree = "<group>"; };
-		288BC9482105857100E47ADA /* HVWBorderShownCardCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HVWBorderShownCardCell.m; sourceTree = "<group>"; };
 		57D8C4F896A90D7B9D38AEBE /* libPods-ZSBannerViewDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ZSBannerViewDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CB348E1BE1281E25F7C49F2 /* Pods-ZSBannerViewDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSBannerViewDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZSBannerViewDemo/Pods-ZSBannerViewDemo.release.xcconfig"; sourceTree = "<group>"; };
 		9453278CB2E85B3B835CB6F2 /* Pods-ZSBannerViewDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZSBannerViewDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZSBannerViewDemo/Pods-ZSBannerViewDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,10 +76,6 @@
 				288BC9282101B8F400E47ADA /* AppDelegate.m */,
 				288BC92A2101B8F400E47ADA /* ViewController.h */,
 				288BC92B2101B8F400E47ADA /* ViewController.m */,
-				288BC9442105855000E47ADA /* HVWBorderShownCardsView.h */,
-				288BC9452105855000E47ADA /* HVWBorderShownCardsView.m */,
-				288BC9472105857100E47ADA /* HVWBorderShownCardCell.h */,
-				288BC9482105857100E47ADA /* HVWBorderShownCardCell.m */,
 				288BC92D2101B8F400E47ADA /* Main.storyboard */,
 				288BC9302101B8F500E47ADA /* Assets.xcassets */,
 				288BC9322101B8F500E47ADA /* LaunchScreen.storyboard */,
@@ -249,9 +239,7 @@
 			files = (
 				288BC92C2101B8F400E47ADA /* ViewController.m in Sources */,
 				288BC9432101BC0C00E47ADA /* ZSBannerCell.m in Sources */,
-				288BC9462105855000E47ADA /* HVWBorderShownCardsView.m in Sources */,
 				288BC9372101B8F500E47ADA /* main.m in Sources */,
-				288BC9492105857100E47ADA /* HVWBorderShownCardCell.m in Sources */,
 				288BC9292101B8F400E47ADA /* AppDelegate.m in Sources */,
 				288BC9402101BAA400E47ADA /* ZSBannerView.m in Sources */,
 			);
