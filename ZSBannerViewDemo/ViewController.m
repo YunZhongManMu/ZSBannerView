@@ -49,6 +49,8 @@
     ZSBannerConfig *config = [[ZSBannerConfig alloc] init];
     config.autoScrollInterval = 2;
     config.placeholder = [UIImage imageNamed:@"placeholder"];
+    config.horizontalMargin = 40;
+    config.itemMargin = 15;
     return config;
 }
 

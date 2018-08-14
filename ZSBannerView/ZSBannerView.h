@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZSBannerConfig.h"
 
-@class ZSBannerView, ZSBannerConfig;
-
+@class ZSBannerView;
 @protocol ZSBannerViewDataSource <NSObject>
 
 @required
@@ -27,13 +27,6 @@
 
 @end
 
-@interface ZSBannerConfig : NSObject
-
-@property (nonatomic, strong) UIImage *placeholder;
-
-@property (nonatomic, assign) NSTimeInterval autoScrollInterval;
-
-@end
 
 @interface ZSBannerView : UIView
 

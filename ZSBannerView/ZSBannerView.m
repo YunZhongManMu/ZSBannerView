@@ -9,18 +9,6 @@
 #import "ZSBannerView.h"
 #import "ZSBannerCell.h"
 
-//CGFloat const HorizontalMargin2 = 50.0;
-//CGFloat const ItemMargin2 = 15.0;
-
-CGFloat const HorizontalMargin2 = 0;
-CGFloat const ItemMargin2 = 0;
-
-@interface ZSBannerConfig ()
-
-- (void)refreshConfig:(ZSBannerConfig *)config;
-
-@end
-
 @interface ZSBannerView ()<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -36,47 +24,21 @@ CGFloat const ItemMargin2 = 0;
 
 @implementation ZSBannerView
 
-// 解决当父View释放时，当前试图因为被Timer强引用而不能释放的问题
-- (void)willMoveToSuperview:(UIView *)newSuperview {
-    if (!newSuperview) {
-        [self stopTimer];
-    }
-}
-
 #pragma mark - init
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self createUI];
         [self createConfig];
+        [self createUI];
     }
     return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        [self createUI];
         [self createConfig];
+        [self createUI];
     }
     return self;
-}
-
-- (void)createUI {
-    [self addSubview:self.collectionView];
-    [self.collectionView registerClass:ZSBannerCell.class forCellWithReuseIdentifier:ZSBannerCell.zs_identifier];
-    CGFloat pageScrollWidth = (self.bounds.size.width - HorizontalMargin2 * 2) + ItemMargin2;
-    
-    CGRect frame = CGRectMake((self.bounds.size.width - pageScrollWidth) / 2.0, 0, pageScrollWidth, self.bounds.size.height);
-    UIScrollView *panScrollView = [[UIScrollView alloc] initWithFrame:frame];
-    panScrollView.backgroundColor = [UIColor redColor];
-    panScrollView.hidden = YES;
-    panScrollView.showsHorizontalScrollIndicator = NO;
-    panScrollView.pagingEnabled = YES;
-    panScrollView.delegate = self;
-    [self addSubview:panScrollView];
-    self.panScrollView = panScrollView;
-
-    [_collectionView addGestureRecognizer:panScrollView.panGestureRecognizer];
-    _collectionView.panGestureRecognizer.enabled = NO;
 }
 
 - (void)createConfig {
@@ -84,13 +46,26 @@ CGFloat const ItemMargin2 = 0;
     ZSBannerConfig *bannerConfig = [[ZSBannerConfig alloc] init];
     bannerConfig.placeholder = nil;
     bannerConfig.autoScrollInterval = 3;
+    bannerConfig.horizontalMargin = 0;
+    bannerConfig.itemMargin = 0;
     self.bannerConfig = bannerConfig;
+}
+
+- (void)createUI {
+    [self addSubview:self.collectionView];
+    [self addSubview:self.panScrollView];
+
+    [_collectionView addGestureRecognizer:self.panScrollView.panGestureRecognizer];
+    _collectionView.panGestureRecognizer.enabled = NO;
 }
 
 #pragma mark - public
 - (void)reloadData {
     if ([self.dataSource respondsToSelector:@selector(dataSourceOfBannerView:)]) {
-        self.dataArray = [self.dataSource dataSourceOfBannerView:self];
+        NSArray *dataArray = [self.dataSource dataSourceOfBannerView:self];
+        if ([dataArray isKindOfClass:[NSArray class]] && dataArray.count > 0) {
+            self.dataArray = [NSArray arrayWithArray:dataArray];
+        }
     }
     
     if ([self.dataSource respondsToSelector:@selector(configOfBannerView:)]) {
@@ -108,6 +83,10 @@ CGFloat const ItemMargin2 = 0;
         self.collectionView.scrollEnabled = NO;
         [self stopTimer];
     }
+    
+    CGFloat pageScrollWidth = (self.bounds.size.width - self.bannerConfig.horizontalMargin * 2) + self.bannerConfig.itemMargin;
+    CGRect frame = CGRectMake((self.bounds.size.width - pageScrollWidth) / 2.0, 0, pageScrollWidth, self.bounds.size.height);
+    self.panScrollView.frame = frame;
     
     self.panScrollView.contentSize = CGSizeMake(self.panScrollView.frame.size.width * self.totalItemsCount, self.panScrollView.frame.size.height);
     
@@ -198,8 +177,6 @@ CGFloat const ItemMargin2 = 0;
     id data = self.dataArray[itemIndex];
     [cell configData:data placeholder:self.bannerConfig.placeholder];
     
-    cell.backgroundColor = [UIColor redColor];
-    
     return cell;
 }
 
@@ -214,29 +191,24 @@ CGFloat const ItemMargin2 = 0;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat itemWidth = (self.bounds.size.width - HorizontalMargin2 * 2);
+    CGFloat itemWidth = (self.bounds.size.width - self.bannerConfig.horizontalMargin * 2);
     return CGSizeMake(itemWidth, self.bounds.size.height);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return ItemMargin2;
+    return self.bannerConfig.itemMargin;
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, HorizontalMargin2, 0, HorizontalMargin2);
+    return UIEdgeInsetsMake(0, self.bannerConfig.horizontalMargin, 0, self.bannerConfig.horizontalMargin);
 }
-
-//同一行不同cell间距
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-//    return 0;
-//}
 
 #pragma mark - lazy
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
+    
         _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -244,9 +216,22 @@ CGFloat const ItemMargin2 = 0;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor whiteColor];
-//        _collectionView.clipsToBounds = YES;
+        
+        [_collectionView registerClass:ZSBannerCell.class forCellWithReuseIdentifier:ZSBannerCell.zs_identifier];
     }
     return _collectionView;
+}
+
+- (UIScrollView *)panScrollView {
+    if (!_panScrollView) {
+        _panScrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+        _panScrollView.backgroundColor = [UIColor whiteColor];
+        _panScrollView.hidden = YES;
+        _panScrollView.showsHorizontalScrollIndicator = NO;
+        _panScrollView.pagingEnabled = YES;
+        _panScrollView.delegate = self;
+    }
+    return _panScrollView;
 }
 
 - (NSArray *)dataArray {
@@ -256,23 +241,17 @@ CGFloat const ItemMargin2 = 0;
     return _dataArray;
 }
 
+// 解决当父View释放时，当前试图因为被Timer强引用而不能释放的问题
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    if (!newSuperview) {
+        [self stopTimer];
+    }
+}
+
 // 解决当timer释放后 回调scrollViewDidScroll时，访问野指针导致崩溃
 - (void)dealloc {
     _collectionView.delegate = nil;
     _collectionView.dataSource = nil;
-}
-
-@end
-
-@implementation ZSBannerConfig
-
-- (void)refreshConfig:(ZSBannerConfig *)config {
-    if (config.placeholder) {
-        self.placeholder = config.placeholder;
-    }
-    if (config.autoScrollInterval >= 0) {
-        self.autoScrollInterval = config.autoScrollInterval;
-    }
 }
 
 @end

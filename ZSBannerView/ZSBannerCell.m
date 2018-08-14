@@ -62,6 +62,8 @@
 - (UIImageView *)imageView {
     if (!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView.layer.cornerRadius = 5;
+        _imageView.layer.masksToBounds = YES;
     }
     return _imageView;
 }

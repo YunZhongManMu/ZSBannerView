@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		281F74F62122AACB00F7CCF3 /* ZSBannerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 281F74F52122AACB00F7CCF3 /* ZSBannerConfig.m */; };
 		288BC9292101B8F400E47ADA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC9282101B8F400E47ADA /* AppDelegate.m */; };
 		288BC92C2101B8F400E47ADA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 288BC92B2101B8F400E47ADA /* ViewController.m */; };
 		288BC92F2101B8F400E47ADA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 288BC92D2101B8F400E47ADA /* Main.storyboard */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		281F74F42122AACB00F7CCF3 /* ZSBannerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSBannerConfig.h; sourceTree = "<group>"; };
+		281F74F52122AACB00F7CCF3 /* ZSBannerConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSBannerConfig.m; sourceTree = "<group>"; };
 		288BC9242101B8F400E47ADA /* ZSBannerViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZSBannerViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		288BC9272101B8F400E47ADA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		288BC9282101B8F400E47ADA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 				288BC93F2101BAA400E47ADA /* ZSBannerView.m */,
 				288BC9412101BC0C00E47ADA /* ZSBannerCell.h */,
 				288BC9422101BC0C00E47ADA /* ZSBannerCell.m */,
+				281F74F42122AACB00F7CCF3 /* ZSBannerConfig.h */,
+				281F74F52122AACB00F7CCF3 /* ZSBannerConfig.m */,
 			);
 			path = ZSBannerView;
 			sourceTree = SOURCE_ROOT;
@@ -237,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				281F74F62122AACB00F7CCF3 /* ZSBannerConfig.m in Sources */,
 				288BC92C2101B8F400E47ADA /* ViewController.m in Sources */,
 				288BC9432101BC0C00E47ADA /* ZSBannerCell.m in Sources */,
 				288BC9372101B8F500E47ADA /* main.m in Sources */,
